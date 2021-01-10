@@ -16,6 +16,8 @@ int chSnowFall;
 boolean driveMotorRuning = false;
 boolean debug = true;
 String driveMotorState = "STOP";
+String upDownMotorState = "STOP";
+String snowFallMotorState = "STOP";
 
 #define PIN_MOTOR_RIGHT_FORWARD 13 // Relay 1
 #define PIN_MOTOR_RIGHT_REVERSE 12 // Relay 2
@@ -86,7 +88,7 @@ void loop() {
 void handleMotorDirection(){  
   if(chForwardReverse < 900){
     // lost communication do nothing
-    
+    Serial.println("LOST communication"); 
   } else { 
     driveMotorRuning = false;
     if(isInFRTopRange(chForwardReverse)){    
@@ -109,31 +111,36 @@ void handleMotorDirection(){
 }
 
 void handleUpDown(){  
-  if(chUpDown > 1400 && chUpDown < 1500){
+  //if(chUpDown > 1400 && chUpDown < 1500){
     // lost communication do nothing
-  } else {
-    if(chUpDown > 1800){
-      digitalWrite(PIN_UP_DOWN_FORWARD,HIGH);
-      digitalWrite(PIN_UP_DOWN_REVERSE,LOW);
-    } else if(chUpDown < 1200 && chUpDown > 900){
+  //} else {
+    upDownMotorState = "STOP"; 
+    if(chUpDown > 1800){ // switch facing down
+      upDownMotorState = "REVERSE";
       digitalWrite(PIN_UP_DOWN_FORWARD,LOW);
       digitalWrite(PIN_UP_DOWN_REVERSE,HIGH);
+    } else if(chUpDown < 1200 && chUpDown > 900){// switch facing up
+      upDownMotorState = "FORWARD"; 
+      digitalWrite(PIN_UP_DOWN_FORWARD,HIGH);
+      digitalWrite(PIN_UP_DOWN_REVERSE,LOW);      
     } else {
       digitalWrite(PIN_UP_DOWN_FORWARD,LOW);
       digitalWrite(PIN_UP_DOWN_REVERSE,LOW);  
     }
-  }
+  //}
 }
 
 void handleSnowFall(){
-
+  snowFallMotorState = "STOP"; 
   if(chSnowFall > 1400 && chSnowFall < 1500){
     // lost communication do nothing
   } else {
     if(chSnowFall > 1500){
+      snowFallMotorState = "FORWARD";
       digitalWrite(PIN_SNOW_FALL_FORWARD,HIGH);
       digitalWrite(PIN_SNOW_FALL_REVERSE,LOW);
     } else if(chSnowFall > 1100 && chSnowFall < 1200){
+      snowFallMotorState = "REVERSE";
       digitalWrite(PIN_SNOW_FALL_FORWARD,LOW);
       digitalWrite(PIN_SNOW_FALL_REVERSE,HIGH);
     } else {
@@ -169,20 +176,18 @@ void driveMotorReverse(){
 
 void driveMotorRight(){
   driveMotorState = "RIGHT";
-  
-  digitalWrite(PIN_MOTOR_RIGHT_FORWARD,HIGH);
-  digitalWrite(PIN_MOTOR_RIGHT_REVERSE,LOW);
-  digitalWrite(PIN_MOTOR_LEFT_FORWARD,LOW);
-  digitalWrite(PIN_MOTOR_LEFT_REVERSE,HIGH); 
+  digitalWrite(PIN_MOTOR_RIGHT_FORWARD,LOW);
+  digitalWrite(PIN_MOTOR_RIGHT_REVERSE,HIGH);
+  digitalWrite(PIN_MOTOR_LEFT_FORWARD,HIGH);
+  digitalWrite(PIN_MOTOR_LEFT_REVERSE,LOW);   
 }
 
 void driveMotorLeft(){
   driveMotorState = "LEFT";
-  
-  digitalWrite(PIN_MOTOR_RIGHT_FORWARD,LOW);
-  digitalWrite(PIN_MOTOR_RIGHT_REVERSE,HIGH);
-  digitalWrite(PIN_MOTOR_LEFT_FORWARD,HIGH);
-  digitalWrite(PIN_MOTOR_LEFT_REVERSE,LOW); 
+  digitalWrite(PIN_MOTOR_RIGHT_FORWARD,HIGH);
+  digitalWrite(PIN_MOTOR_RIGHT_REVERSE,LOW);
+  digitalWrite(PIN_MOTOR_LEFT_FORWARD,LOW);
+  digitalWrite(PIN_MOTOR_LEFT_REVERSE,HIGH);  
 }
 
 void printDebug(){
@@ -195,8 +200,12 @@ void printDebug(){
     Serial.print(chUpDown);
     Serial.print(", chSnowFall = ");
     Serial.print(chSnowFall);
-    Serial.print(", motorState = ");
-    Serial.println(motorState);
+    Serial.print(", driveMotorState = ");
+    Serial.print(driveMotorState);
+    Serial.print(", upDownMotorState = ");
+    Serial.print(upDownMotorState);
+    Serial.print(", snowFallMotorState = ");
+    Serial.println(snowFallMotorState);    
   }
 }
 
