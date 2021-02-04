@@ -1,8 +1,9 @@
-const simulate = false;
+const simulate = true;
 const debug = true;
 
-const Gpio = require('onoff').Gpio;
-
+if(!simulate){
+  const Gpio = require('onoff').Gpio;
+}
 
 const BUTTON_A = "button_1_1";
 const BUTTON_B = "button_2_1";
@@ -38,9 +39,9 @@ buttonMapping[AXIS_TOP] = ACTION_SB_UP;
 buttonMapping[AXIS_BOTTOM] = ACTION_SB_DOWN;
 
 
-var snowBlowerDirection = new MultiDirectionalMotor('snowBlowerDirection', 4, 17, 2, 3);
+var snowBlowerDirection = new MultiDirectionalMotor('snowBlowerDirection', 2, 3, 4, 17);
 var snowBlowerUpDown = new BiDirectionalMotor('snowblowerUpDown', 27, 22);
-var snowFallLeftRight = new BiDirectionalMotor('snowFallLeftRight', 23, 18);
+var snowFallLeftRight = new MultiDirectionalMotor('snowFallLeftRight', 18, 23);
 
 allMotorStop();
 
@@ -109,73 +110,77 @@ function allMotorStop(){
 function MultiDirectionalMotor(name, motorLeftForwardPin, motorLeftReversePin, motorRightForwardPin, motorRightReversePin) {
 
   this.name = name;
+  if(!simulate){
+    this.motorLeftForward = new Gpio(motorLeftForwardPin, 'out');
+    this.motorLeftReverse = new Gpio(motorLeftReversePin, 'out');
+    this.motorRightForward = new Gpio(motorRightForwardPin, 'out');
+    this.motorRightReverse = new Gpio(motorRightReversePin, 'out');
+  }
 
-  console.log("[" + name + "] motorLeftForwardPin = " + motorLeftForwardPin);
-  var motorLeftForward = new Gpio(motorLeftForwardPin, 'out');
-  console.log("[" + name + "] motorLeftReversePin = " + motorLeftReversePin);
-  var motorLeftReverse = new Gpio(motorLeftReversePin, 'out');
-  console.log("[" + name + "] motorRightForwardPin = " + motorRightForwardPin);
-  var motorRightForward = new Gpio(motorRightForwardPin, 'out');
-  console.log("[" + name + "] motorRightReversePin = " + motorRightReversePin);
-  var motorRightReverse = new Gpio(motorRightReversePin, 'out');
-  
+
   this.forward = function () {
     if(debug){
       console.log("[" + name + "] go forward");
     }
-    motorLeftForward.writeSync(1);
-    motorRightForward.writeSync(1);
+    if(!simulate){
+      motorLeftForward.writeSync(1);
+      motorRightForward.writeSync(1);
 
-    motorLeftReverse.writeSync(0);
-    motorRightReverse.writeSync(0);
-    
+      motorLeftReverse.writeSync(0);
+      motorRightReverse.writeSync(0);
+    }
   }
 
   this.reverse = function() {
     if(debug){
       console.log("[" + name + "] go reverse");
     }
-    motorLeftForward.writeSync(0);
-    motorRightForward.writeSync(0);
 
-    motorLeftReverse.writeSync(1);
-    motorRightReverse.writeSync(1);
-    
+    if(!simulate){
+      motorLeftForward.writeSync(0);
+      motorRightForward.writeSync(0);
+
+      motorLeftReverse.writeSync(1);
+      motorRightReverse.writeSync(1);
+    }
   }
 
   this.left = function() {
     if(debug){
       console.log("[" + name + "] go left");
     }
-    motorLeftForward.writeSync(1);
-    motorRightForward.writeSync(0);
+    if(!simulate){
+      motorLeftForward.writeSync(1);
+      motorRightForward.writeSync(0);
 
-    motorLeftReverse.writeSync(0);
-    motorRightReverse.writeSync(1);
-    
+      motorLeftReverse.writeSync(0);
+      motorRightReverse.writeSync(1);
+    }
   }
 
   this.right = function() {
     if(debug){
       console.log("[" + name + "] go right");
     }
-    motorLeftForward.writeSync(0);
-    motorRightForward.writeSync(1);
+    if(!simulate){
+      motorLeftForward.writeSync(1);
+      motorRightForward.writeSync(0);
 
-    motorLeftReverse.writeSync(1);
-    motorRightReverse.writeSync(0);
+      motorLeftReverse.writeSync(0);
+      motorRightReverse.writeSync(1);
+    }
   }
 
   this.stop = function() {
     if(debug){
       console.log("[" + name + "] stop");
     }
-
-    motorLeftForward.writeSync(0);
-    motorRightForward.writeSync(0);
-    motorLeftReverse.writeSync(0);
-    motorRightReverse.writeSync(0);
-
+    if(!simulate){
+      motorLeftForward.writeSync(0);
+      motorRightForward.writeSync(0);
+      motorLeftReverse.writeSync(0);
+      motorRightReverse.writeSync(0);
+    }
   }
 
 }
@@ -183,26 +188,31 @@ function MultiDirectionalMotor(name, motorLeftForwardPin, motorLeftReversePin, m
 function BiDirectionalMotor(name, motorForwardPin, motorReversePin) {
 
   this.name = name;
-  var motorForward = new Gpio(motorForwardPin, 'out');
-  var motorReverse = new Gpio(motorReversePin, 'out');
-  
+  if(!simulate){
+    this.motorForward = new Gpio(motorForwardPin, 'out');
+    this.motorReverse = new Gpio(motorReversePin, 'out');
+  }
+
+
   this.forward = function () {
     if(debug){
       console.log("[" + name + "] go forward");
     }
 
-    motorForward.writeSync(1);
-    motorReverse.writeSync(0);
-
+    if(!simulate){
+      motorForward.writeSync(1);
+      motorReverse.writeSync(0);
+    }
   }
 
   this.reverse = function() {
     if(debug){
       console.log("[" + name + "] go reverse");
     }
-    motorForward.writeSync(0);
-    motorReverse.writeSync(1);
-    
+    if(!simulate){
+      motorForward.writeSync(0);
+      motorReverse.writeSync(1);
+    }
   }
 
   this.stop = function() {
@@ -210,8 +220,9 @@ function BiDirectionalMotor(name, motorForwardPin, motorReversePin) {
       console.log("[" + name + "] stop");
     }
 
-    motorForward.writeSync(0);
-    motorReverse.writeSync(0);
-    
+    if(!simulate){
+      motorForward.writeSync(0);
+      motorReverse.writeSync(0);
+    }
   }
 }
