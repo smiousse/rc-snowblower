@@ -1,0 +1,11 @@
+{
+  "name": "rc-snowblower-receiver",
+  "version": "1.0.0",
+  "description": "Dexero Core App",
+  "author": "Stephane Miousse",
+  "license": "ISC",
+  "dependencies": {
+    "joystick": "^0.1.2",
+    "pigpio": "^3.3.0"
+  }
+}
