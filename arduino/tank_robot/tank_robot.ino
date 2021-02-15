@@ -1,4 +1,7 @@
 #include "MultiDirectionalMotor.h"
+#include <SPI.h>
+#include <nRF24L01.h>
+#include <RF24.h>
 
 //Array, used to store the data of pattern, can be calculated by yourself or obtained from the modulus tool
 unsigned char start01[] = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80,0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
@@ -25,6 +28,14 @@ MultiDirectionalMotor robot("robot", ML_Ctrl, MR_Ctrl, ML_PWM, MR_PWM);
 
 char bluetooth_val; //save the value of Bluetooth reception
 
+
+/*
+ * RF receiver part
+ */
+
+RF24 radio(7, 8); // CE, CSN
+const uint64_t pipes[] = { 0x65646f4e31 };
+
 void setup() {
 
   Serial.begin(9600); // Serial for debug
@@ -36,13 +47,30 @@ void setup() {
 
   robot.init();
 
+  // RF receiver part
+  radio.begin();
+  radio.openReadingPipe(0, pipes[0]);
+  radio.setPALevel(RF24_PA_LOW);
+  radio.startListening();
+
+  Serial.println("Starting read on 0x65646f4e31");
+
 }
 
 void loop() {
-  if (Serial.available()){
-    bluetooth_val = Serial.read();
+  //if (Serial.available()){
+    //bluetooth_val = Serial.read();
+    //Serial.println(bluetooth_val);
+  //}
+  if (radio.available()) {
+    char text[32] = "";
+    radio.read(&text, sizeof(text));
+    Serial.println(text);
+    bluetooth_val = text[0];
+    
     Serial.println(bluetooth_val);
-  }
+  } 
+  
 
   switch (bluetooth_val){
    case 'F':  //forward command

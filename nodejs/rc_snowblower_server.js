@@ -16,18 +16,18 @@ const AXIS_RIGHT = "axis_0_32767";
 const AXIS_TOP = "axis_1_-32767";
 const AXIS_BOTTOM = "axis_1_32767";
 
-const ACTION_SB_FORWARD = "action_snowblower_forward";
-const ACTION_SB_BACKWARD = "action_snowblower_backward";
-const ACTION_SB_LEFT = "action_snowblower_left";
-const ACTION_SB_RIGHT = "action_snowblower_right";
+const ACTION_SB_FORWARD = "F";
+const ACTION_SB_BACKWARD = "B";
+const ACTION_SB_LEFT = "L";
+const ACTION_SB_RIGHT = "R";
 const ACTION_SB_UP = "action_snowblower_up";
 const ACTION_SB_DOWN = "action_snowblower_down";
 const ACTION_SF_LEFT = "action_snowfall_left";
 const ACTION_SF_RIGHT = "action_snowfall_right";
-const ACTION_SPEED_UP = "action_speed_up";
-const ACTION_SPEED_DOWN = "action_speed_down";
-const ACTION_SPEED_RESET = "action_speed_reset";
-const ACTION_STOP = "action_stop";
+const ACTION_SPEED_UP = "Y";
+const ACTION_SPEED_DOWN = "X";
+const ACTION_SPEED_RESET = "U";
+const ACTION_STOP = "S";
 
 var buttonMapping = {};
 buttonMapping[BUTTON_X] = ACTION_SB_FORWARD;

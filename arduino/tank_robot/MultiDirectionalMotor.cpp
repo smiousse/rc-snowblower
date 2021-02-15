@@ -7,7 +7,7 @@ MultiDirectionalMotor::MultiDirectionalMotor(String name, int motorLeftCtrlPin, 
   _turnOffset = 54;
 
   _motorLeftOffset = 0;
-  _motorRightOffset = 5;
+  _motorRightOffset = 10;
 
   _name = name;
   _motorLeftCtrlPin = motorLeftCtrlPin;
