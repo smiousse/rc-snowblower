@@ -68,14 +68,14 @@ void MultiDirectionalMotor::forwardLeft(){
   digitalWrite(_motorRightCtrlPin,LOW);
 
   analogWrite(_motorRightSpeedPin, _calculateSpeed("turn", _motorRightOffset));
-  analogWrite(_motorLeftSpeedPin, _calculateSpeed("normal", _motorLeftOffset));
+  analogWrite(_motorLeftSpeedPin, _calculateSpeed("slow_turn", _motorLeftOffset));
 }
 
 void MultiDirectionalMotor::forwardRight(){
   digitalWrite(_motorLeftCtrlPin,LOW);
   digitalWrite(_motorRightCtrlPin,LOW);
 
-  analogWrite(_motorRightSpeedPin, _calculateSpeed("normal", _motorRightOffset));
+  analogWrite(_motorRightSpeedPin, _calculateSpeed("slow_turn", _motorRightOffset));
   analogWrite(_motorLeftSpeedPin, _calculateSpeed("turn", _motorLeftOffset));
 }
 
@@ -84,14 +84,14 @@ void MultiDirectionalMotor::reverseLeft(){
   digitalWrite(_motorRightCtrlPin,HIGH);
 
   analogWrite(_motorRightSpeedPin, _calculateSpeed("turn", _motorRightOffset));
-  analogWrite(_motorLeftSpeedPin, _calculateSpeed("normal", _motorLeftOffset));
+  analogWrite(_motorLeftSpeedPin, _calculateSpeed("slow_turn", _motorLeftOffset));
 }
 
 void MultiDirectionalMotor::reverseRight(){
   digitalWrite(_motorLeftCtrlPin,HIGH);
   digitalWrite(_motorRightCtrlPin,HIGH);
 
-  analogWrite(_motorRightSpeedPin, _calculateSpeed("normal", _motorRightOffset));
+  analogWrite(_motorRightSpeedPin, _calculateSpeed("slow_turn", _motorRightOffset));
   analogWrite(_motorLeftSpeedPin, _calculateSpeed("turn", _motorLeftOffset));
 }
 
@@ -104,12 +104,20 @@ void MultiDirectionalMotor::stop(){
 
 void MultiDirectionalMotor::increaseSpeed(){
   _currentSpeed+=20;
+
+  if(_currentSpeed > 255){
+    _currentSpeed=255;
+  }
+  
   Serial.print("_currentSpeed = ");
   Serial.println(_currentSpeed);
 }
 
 void MultiDirectionalMotor::decreaseSpeed(){
   _currentSpeed-=20;
+  if(_currentSpeed < 0){
+    _currentSpeed=0;
+  }
   Serial.print("_currentSpeed = ");
   Serial.println(_currentSpeed);
 }
@@ -129,6 +137,8 @@ int MultiDirectionalMotor::_calculateSpeed(String actionType, int motorOffset){
   int speed=_currentSpeed;
   if(actionType == "turn"){
     speed=(int)(_currentSpeed+motorOffset+_turnOffset);
+  } else if(actionType == "slow_turn"){
+    speed=(int)(_currentSpeed+motorOffset-_turnOffset);
   } else if(actionType == "normal"){
     speed=(int)(_currentSpeed+motorOffset);
   }

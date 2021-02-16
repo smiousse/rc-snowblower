@@ -85,9 +85,25 @@ void loop() {
       robot.fullLeft();
       matrix_display(left);  //show “left-turning” sign 
       break;
+   case 'D':  // left-turning instruction
+      robot.forwardLeft();
+      matrix_display(left);  //show “left-turning” sign 
+      break;
+   case 'G':  // left-turning instruction
+      robot.reverseLeft();
+      matrix_display(left);  //show “left-turning” sign 
+      break;
    case 'R':  //right-turning instruction
       robot.fullRight();
       matrix_display(right);  //display right-turning sign      
+      break;
+   case 'C':  //right-turning instruction
+      robot.forwardRight();
+      matrix_display(right);  //display right-turning sign      
+      break;
+   case 'H':  // left-turning instruction
+      robot.reverseRight();
+      matrix_display(left);  //show “left-turning” sign 
       break;
    case 'S':  //stop command
       robot.stop();
