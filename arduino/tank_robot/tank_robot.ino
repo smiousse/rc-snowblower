@@ -58,10 +58,7 @@ void setup() {
 }
 
 void loop() {
-  //if (Serial.available()){
-    //bluetooth_val = Serial.read();
-    //Serial.println(bluetooth_val);
-  //}
+  
   if (radio.available()) {
     char text[32] = "";
     radio.read(&text, sizeof(text));
@@ -70,6 +67,10 @@ void loop() {
     
     Serial.println(bluetooth_val);
   } 
+  if (Serial.available()){
+    bluetooth_val = Serial.read();
+    Serial.println(bluetooth_val);
+  }
   
 
   switch (bluetooth_val){

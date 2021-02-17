@@ -6,6 +6,12 @@ const BUTTON_A = "button_1_1";
 const BUTTON_B = "button_2_1";
 const BUTTON_X = "button_0_1";
 const BUTTON_Y = "button_3_1";
+
+const BUTTON_A_RELEASE = "button_1_0";
+const BUTTON_B_RELEASE = "button_2_0";
+const BUTTON_X_RELEASE = "button_0_0";
+const BUTTON_Y_RELEASE = "button_3_0";
+
 const BUTTON_R = "button_5_1";
 const BUTTON_L = "button_4_1";
 const BUTTON_SELECT = "button_8_1";
@@ -15,6 +21,9 @@ const AXIS_LEFT = "axis_0_-32767";
 const AXIS_RIGHT = "axis_0_32767";
 const AXIS_TOP = "axis_1_-32767";
 const AXIS_BOTTOM = "axis_1_32767";
+
+const AXIS_LEFT_RIGHT_RELEASE = "axis_0_0";
+const AXIS_TOP_BOTTOM_RELEASE = "axis_1_0";
 
 const ACTION_SB_FORWARD = "F";
 const ACTION_SB_BACKWARD = "B";
@@ -27,17 +36,29 @@ const ACTION_SF_RIGHT = "C";
 const ACTION_SPEED_UP = "Y";
 const ACTION_SPEED_DOWN = "X";
 const ACTION_SPEED_RESET = "U";
-const ACTION_STOP = "S";
+const ACTION_SB_STOP = "S";
+const ACTION_SF_STOP = "T";
+const ACTION_UD_STOP = "V";
 
 var buttonMapping = {};
 buttonMapping[BUTTON_X] = ACTION_SB_FORWARD;
 buttonMapping[BUTTON_B] = ACTION_SB_BACKWARD;
 buttonMapping[BUTTON_Y] = ACTION_SB_LEFT;
 buttonMapping[BUTTON_A] = ACTION_SB_RIGHT;
+
+buttonMapping[BUTTON_X_RELEASE] = ACTION_SB_STOP;
+buttonMapping[BUTTON_B_RELEASE] = ACTION_SB_STOP;
+buttonMapping[BUTTON_Y_RELEASE] = ACTION_SB_STOP;
+buttonMapping[BUTTON_A_RELEASE] = ACTION_SB_STOP;
+
 buttonMapping[AXIS_LEFT] = ACTION_SF_LEFT;
 buttonMapping[AXIS_RIGHT] = ACTION_SF_RIGHT;
 buttonMapping[AXIS_TOP] = ACTION_SB_UP;
 buttonMapping[AXIS_BOTTOM] = ACTION_SB_DOWN;
+
+buttonMapping[AXIS_LEFT_RIGHT_RELEASE] = ACTION_SF_STOP;
+buttonMapping[AXIS_TOP_BOTTOM_RELEASE] = ACTION_UD_STOP;
+
 buttonMapping[BUTTON_R] = ACTION_SPEED_UP;
 buttonMapping[BUTTON_L] = ACTION_SPEED_DOWN;
 buttonMapping[BUTTON_SELECT] = ACTION_SPEED_RESET;
@@ -91,14 +112,12 @@ function dispatch(req, res){
 }
 
 function sendAction(action){
-  if(!action){
-    action = ACTION_STOP;
+  if(action){
+    console.log("[sendAction] action = " + action);
+
+    rf24.useWritePipe("0x65646f4e31",true); // Select the pipe address to write with Autock
+    rf24.write(Buffer.from(action));
   }
-
-  console.log("[sendAction] action = " + action);
-
-  rf24.useWritePipe("0x65646f4e31",true); // Select the pipe address to write with Autock
-  rf24.write(Buffer.from(action));
 }
 
 function onButtonPress(buttonInfo){
