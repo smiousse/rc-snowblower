@@ -24,9 +24,10 @@ class MdMotorWithController
 
   private:
     String _name;
+    int _currentAction;
+    int _currentSpeed;
 
     int _fixedTurnSpeed;
-    int _currentSpeed;
     int _turnOffset;
     int _turnMode;
 
@@ -38,6 +39,7 @@ class MdMotorWithController
     int _motorRightSpeedPin;
     int _motorLeftSpeedPin;
     int _calculateSpeed(String actionType, int motorOffset);
+    void _refreshCurrentSpeed();
 };
 
 #endif

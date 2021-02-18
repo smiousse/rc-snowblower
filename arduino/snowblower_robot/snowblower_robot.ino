@@ -21,6 +21,9 @@
 #define PIN_MOTOR_LEFT_SPEED 44
 #define PIN_MOTOR_RIGHT_SPEED 45
 
+#define PIN_MOTOR_LEFT_ENABLE 30
+#define PIN_MOTOR_RIGHT_ENABLE 31
+
 #define PIN_UP_DOWN_FORWARD 26 // Relay 5
 #define PIN_UP_DOWN_REVERSE 27 // Relay 6
 
@@ -44,6 +47,13 @@ RF24 radio(PIN_RF_CE, PIN_RF_CSN); // CE, CSN
 void setup() {
 
   Serial.begin(9600); // Serial for debug
+
+  // The relay control 2 cheap motor controller that need to be enabled
+  // so I out 5v to enable it
+  pinMode(PIN_MOTOR_LEFT_ENABLE, OUTPUT);
+  pinMode(PIN_MOTOR_RIGHT_ENABLE, OUTPUT);
+  digitalWrite(PIN_MOTOR_LEFT_ENABLE,HIGH);
+  digitalWrite(PIN_MOTOR_RIGHT_ENABLE,HIGH);
 
   robot.init();
   snowblower.init();

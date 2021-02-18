@@ -1,9 +1,16 @@
 #include "Arduino.h"
 #include "MdMotorWithController.h"
 
+
+#define AC_STOP 0
+#define AC_FORWARD 1
+#define AC_REVERSE 2
+#define AC_TURN 3
+
 MdMotorWithController::MdMotorWithController(String name, int motorLeftCtrlPin, int motorRightCtrlPin, int motorLeftSpeedPin, int motorRightSpeedPin, int turnMode){
 
-  _fixedTurnSpeed = 130;
+  _fixedTurnSpeed = 140;
+  _currentAction = AC_STOP;
   _currentSpeed = 200;
   _turnOffset = 54;
   _turnMode = turnMode;
@@ -34,6 +41,7 @@ void MdMotorWithController::init(){
 }
 
 void MdMotorWithController::forward(){
+  _currentAction = AC_FORWARD;  
   digitalWrite(_motorLeftCtrlPin,LOW);
   digitalWrite(_motorRightCtrlPin,LOW);
 
@@ -42,6 +50,7 @@ void MdMotorWithController::forward(){
 }
 
 void MdMotorWithController::reverse(){
+  _currentAction = AC_REVERSE;
   digitalWrite(_motorLeftCtrlPin,HIGH);
   digitalWrite(_motorRightCtrlPin,HIGH);
 
@@ -50,7 +59,7 @@ void MdMotorWithController::reverse(){
 }
 
 void MdMotorWithController::fullLeft(){
-
+  _currentAction = AC_TURN;
   digitalWrite(_motorLeftCtrlPin,HIGH);
   digitalWrite(_motorRightCtrlPin,LOW);
 
@@ -59,6 +68,7 @@ void MdMotorWithController::fullLeft(){
 }
 
 void MdMotorWithController::fullRight(){
+  _currentAction = AC_TURN;
   digitalWrite(_motorLeftCtrlPin,LOW);
   digitalWrite(_motorRightCtrlPin,HIGH);
 
@@ -67,6 +77,7 @@ void MdMotorWithController::fullRight(){
 }
 
 void MdMotorWithController::forwardLeft(){
+  _currentAction = AC_TURN;
   digitalWrite(_motorLeftCtrlPin,LOW);
   digitalWrite(_motorRightCtrlPin,LOW);
 
@@ -75,6 +86,7 @@ void MdMotorWithController::forwardLeft(){
 }
 
 void MdMotorWithController::forwardRight(){
+  _currentAction = AC_TURN;
   digitalWrite(_motorLeftCtrlPin,LOW);
   digitalWrite(_motorRightCtrlPin,LOW);
 
@@ -83,6 +95,7 @@ void MdMotorWithController::forwardRight(){
 }
 
 void MdMotorWithController::reverseLeft(){
+  _currentAction = AC_TURN;
   digitalWrite(_motorLeftCtrlPin,HIGH);
   digitalWrite(_motorRightCtrlPin,HIGH);
 
@@ -91,6 +104,7 @@ void MdMotorWithController::reverseLeft(){
 }
 
 void MdMotorWithController::reverseRight(){
+  _currentAction = AC_TURN;
   digitalWrite(_motorLeftCtrlPin,HIGH);
   digitalWrite(_motorRightCtrlPin,HIGH);
 
@@ -99,6 +113,7 @@ void MdMotorWithController::reverseRight(){
 }
 
 void MdMotorWithController::stop(){
+  _currentAction = AC_STOP;
   digitalWrite(_motorLeftCtrlPin,LOW);
   digitalWrite(_motorRightCtrlPin,LOW);
   analogWrite(_motorRightSpeedPin,0);
@@ -107,13 +122,12 @@ void MdMotorWithController::stop(){
 
 void MdMotorWithController::increaseSpeed(){
   _currentSpeed+=20;
-
   if(_currentSpeed > 255){
     _currentSpeed=255;
-  }
-  
+  }  
   Serial.print("_currentSpeed = ");
   Serial.println(_currentSpeed);
+  _refreshCurrentSpeed();
 }
 
 void MdMotorWithController::decreaseSpeed(){
@@ -123,12 +137,24 @@ void MdMotorWithController::decreaseSpeed(){
   }
   Serial.print("_currentSpeed = ");
   Serial.println(_currentSpeed);
+  _refreshCurrentSpeed();
 }
 
 void MdMotorWithController::resetSpeed(){
   _currentSpeed = 200;
   Serial.print("_currentSpeed = ");
   Serial.println(_currentSpeed);
+  _refreshCurrentSpeed();
+}
+
+void MdMotorWithController::_refreshCurrentSpeed(){
+  switch (_currentAction){
+    case AC_FORWARD:
+    case AC_REVERSE: 
+      analogWrite(_motorRightSpeedPin, _calculateSpeed("normal", _motorRightOffset));
+      analogWrite(_motorLeftSpeedPin, _calculateSpeed("normal", _motorLeftOffset));
+      break;
+  }
 }
 
 int MdMotorWithController::_calculateSpeed(String actionType, int motorOffset){
