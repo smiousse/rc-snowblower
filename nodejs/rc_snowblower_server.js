@@ -14,6 +14,9 @@ const BUTTON_Y_RELEASE = "button_3_0";
 
 const BUTTON_R = "button_5_1";
 const BUTTON_L = "button_4_1";
+const BUTTON_R_RELEASE = "button_5_0";
+const BUTTON_L_RELEASE = "button_4_0";
+
 const BUTTON_SELECT = "button_8_1";
 const BUTTON_START = "button_9_1";
 
@@ -31,6 +34,10 @@ const ACTION_SB_LEFT = "L";
 const ACTION_SB_RIGHT = "R";
 const ACTION_SB_UP = "G";
 const ACTION_SB_DOWN = "H";
+const ACTION_SB_FORWARD_RIGHT = "M";
+const ACTION_SB_FORWARD_LEFT = "N";
+const ACTION_SB_BACKWARD_RIGHT = "O";
+const ACTION_SB_BACKWARD_LEFT = "P";
 const ACTION_SF_LEFT = "D";
 const ACTION_SF_RIGHT = "C";
 const ACTION_SPEED_UP = "Y";
@@ -45,11 +52,15 @@ buttonMapping[BUTTON_X] = ACTION_SB_FORWARD;
 buttonMapping[BUTTON_B] = ACTION_SB_BACKWARD;
 buttonMapping[BUTTON_Y] = ACTION_SB_LEFT;
 buttonMapping[BUTTON_A] = ACTION_SB_RIGHT;
+buttonMapping[BUTTON_R] = ACTION_SB_BACKWARD_RIGHT;
+buttonMapping[BUTTON_L] = ACTION_SB_BACKWARD_LEFT;
 
 buttonMapping[BUTTON_X_RELEASE] = ACTION_SB_STOP;
 buttonMapping[BUTTON_B_RELEASE] = ACTION_SB_STOP;
 buttonMapping[BUTTON_Y_RELEASE] = ACTION_SB_STOP;
 buttonMapping[BUTTON_A_RELEASE] = ACTION_SB_STOP;
+buttonMapping[BUTTON_R_RELEASE] = ACTION_SB_STOP;
+buttonMapping[BUTTON_L_RELEASE] = ACTION_SB_STOP;
 
 buttonMapping[AXIS_LEFT] = ACTION_SF_LEFT;
 buttonMapping[AXIS_RIGHT] = ACTION_SF_RIGHT;
@@ -59,9 +70,9 @@ buttonMapping[AXIS_BOTTOM] = ACTION_SB_DOWN;
 buttonMapping[AXIS_LEFT_RIGHT_RELEASE] = ACTION_SF_STOP;
 buttonMapping[AXIS_TOP_BOTTOM_RELEASE] = ACTION_UD_STOP;
 
-buttonMapping[BUTTON_R] = ACTION_SPEED_UP;
-buttonMapping[BUTTON_L] = ACTION_SPEED_DOWN;
-buttonMapping[BUTTON_SELECT] = ACTION_SPEED_RESET;
+buttonMapping[BUTTON_SELECT] = ACTION_SPEED_UP;
+buttonMapping[BUTTON_START] = ACTION_SPEED_DOWN;
+//buttonMapping[BUTTON_SELECT] = ACTION_SPEED_RESET;
 
 var urlPathMapping = {};
 urlPathMapping["/snowblower/action/move_forward"] = ACTION_SB_FORWARD;

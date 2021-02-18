@@ -78,75 +78,77 @@ void loop() {
     bluetooth_val = text[0];
   } 
   
-  if (Serial.available()){
-    bluetooth_val = Serial.read();
-    Serial.println(bluetooth_val);
-  }
+  //if (Serial.available()){
+  //  bluetooth_val = Serial.read();
+ //   Serial.println(bluetooth_val);
+  //}
 
   switch (bluetooth_val){
-   case 'F':  //forward command
+   case 'F': // snowblower forward
       robot.forward();
       snowblower.forward();
       break;
-   case 'B':  //Back command
+   case 'B': // snowblower backward
       robot.reverse();
       snowblower.reverse();
       break;
-   case 'L':  // left-turning instruction
+   case 'L': // snowblower turn left
       robot.fullLeft();
       snowblower.fullLeft();
       break;
-   case 'R':  //right-turning instruction
+   case 'R': // snowblower turn right
       robot.fullRight();  
       snowblower.fullRight();  
       break;  
-   case 'S':  //stop command
+   case 'M': // Snowblower forward and right
+      robot.forwardRight();
+      snowblower.forwardRight();
+      break;
+   case 'N': // Snowblower forward and left
+      robot.forwardLeft();
+      snowblower.forwardLeft();
+   case 'O': // Snowblower reverse and right
+      robot.reverseRight();
+      snowblower.reverseRight();
+      break;
+   case 'P': // Snowblower reverse and left
+      robot.reverseLeft();
+      snowblower.reverseLeft();
+      break;      
+   case 'S': // snowblower stop
       robot.stop();
       snowblower.stop();
       break;
-   case 'X':  
+   case 'X': // snowblower decrease speed
       robot.decreaseSpeed();
-      snowblower.decreaseSpeed();
-      bluetooth_val='0';       
+      snowblower.decreaseSpeed();      
       break;
-   case 'Y':  
+   case 'Y': // snowblower increase speed 
       robot.increaseSpeed();
       snowblower.increaseSpeed();
-      bluetooth_val='0';
       break;
-   case 'U':
+   case 'U': // snowblower reset speed
       robot.resetSpeed();
       snowblower.resetSpeed();
-      bluetooth_val='0';
       break;
    case 'G': // Snowblower up  
-      robot.reverseLeft();
       upDown.forward();
-      bluetooth_val='0';
       break;
    case 'H': // Snowblower down  
-      robot.reverseRight();
       upDown.reverse();
-      bluetooth_val='0';
       break;
    case 'D': // Snowfall left
-      robot.forwardLeft();
       snowfall.forward();
-      bluetooth_val='0';
       break;
-   case 'C': // Snowfall right
-      robot.forwardRight();
+   case 'C': // Snowfall right      
       snowfall.reverse();
-      bluetooth_val='0';
       break;
-   case 'T': // Snowfall STOP
+   case 'T': // Snowfall stop
       snowfall.stop();
-      bluetooth_val='0';
       break;
    case 'V': // Snowblower UpDown stop
       upDown.stop();
-      bluetooth_val='0';
       break;
   }
-   
+  bluetooth_val = ' ';   
 }
