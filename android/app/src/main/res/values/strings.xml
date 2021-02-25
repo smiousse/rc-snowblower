@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">rc-snowblower-android</string>
+    <string name="ble_not_supported">Bluetooth LE not supported</string>
+</resources>

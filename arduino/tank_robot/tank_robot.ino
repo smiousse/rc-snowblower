@@ -1,7 +1,4 @@
 #include "MultiDirectionalMotor.h"
-#include <SPI.h>
-#include <nRF24L01.h>
-#include <RF24.h>
 
 //Array, used to store the data of pattern, can be calculated by yourself or obtained from the modulus tool
 unsigned char start01[] = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80,0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
@@ -26,15 +23,7 @@ unsigned char clear[] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 
 MultiDirectionalMotor robot("robot", ML_Ctrl, MR_Ctrl, ML_PWM, MR_PWM);
 
-char bluetooth_val; //save the value of Bluetooth reception
-
-
-/*
- * RF receiver part
- */
-
-RF24 radio(7, 8); // CE, CSN
-const uint64_t pipes[] = { 0x65646f4e31 };
+char bluetooth_val = 'S'; //save the value of Bluetooth reception
 
 void setup() {
 
@@ -47,26 +36,11 @@ void setup() {
 
   robot.init();
 
-  // RF receiver part
-  radio.begin();
-  radio.openReadingPipe(0, pipes[0]);
-  radio.setPALevel(RF24_PA_LOW);
-  radio.startListening();
-
-  Serial.println("Starting read on 0x65646f4e31");
-
 }
 
 void loop() {
   
-  if (radio.available()) {
-    char text[32] = "";
-    radio.read(&text, sizeof(text));
-    Serial.println(text);
-    bluetooth_val = text[0];
-    
-    Serial.println(bluetooth_val);
-  } 
+
   if (Serial.available()){
     bluetooth_val = Serial.read();
     Serial.println(bluetooth_val);
@@ -75,54 +49,54 @@ void loop() {
 
   switch (bluetooth_val){
    case 'F':  //forward command
-      robot.forward();
+      //robot.forward();
       matrix_display(front);  // show forward design
       break;
    case 'B':  //Back command
-      robot.reverse();
+      //robot.reverse();
       matrix_display(back);  //show back pattern
       break;
    case 'L':  // left-turning instruction
-      robot.fullLeft();
+      //robot.fullLeft();
       matrix_display(left);  //show “left-turning” sign 
       break;
    case 'D':  // left-turning instruction
-      robot.forwardLeft();
+      //robot.forwardLeft();
       matrix_display(left);  //show “left-turning” sign 
       break;
    case 'G':  // left-turning instruction
-      robot.reverseLeft();
+      //robot.reverseLeft();
       matrix_display(left);  //show “left-turning” sign 
       break;
    case 'R':  //right-turning instruction
-      robot.fullRight();
+      //robot.fullRight();
       matrix_display(right);  //display right-turning sign      
       break;
    case 'C':  //right-turning instruction
-      robot.forwardRight();
+      //robot.forwardRight();
       matrix_display(right);  //display right-turning sign      
       break;
    case 'H':  // left-turning instruction
-      robot.reverseRight();
+      //robot.reverseRight();
       matrix_display(left);  //show “left-turning” sign 
       break;
    case 'S':  //stop command
-      robot.stop();
+      //robot.stop();
       matrix_display(STOP01);  //show stop picture
       break;
    case 'X':  //stop command
-      robot.decreaseSpeed();
-      bluetooth_val='0';
-      matrix_display(left);        
+      //robot.decreaseSpeed();
+      //bluetooth_val='0';
+       
       break;
    case 'Y':  //stop command
-      robot.increaseSpeed();
+      //robot.increaseSpeed();
       bluetooth_val='0';
-      matrix_display(right);
+
       break;
    case 'U':  //stop command
-      robot.resetSpeed();
-      bluetooth_val='0';
+      //robot.resetSpeed();
+
       break;
   }
    

@@ -42,3 +42,12 @@ nodejs/node_modules/joystick/package.json
 nodejs/node_modules/joystick/README.md
 nodejs/node_modules/joystick/samples/index.html
 nodejs/node_modules/joystick/samples/trendyjoystick.js
+android/gradle/wrapper/gradle-wrapper.jar
+android/gradle/wrapper/gradle-wrapper.properties
+android/.idea/.gitignore
+android/.idea/.name
+android/.idea/compiler.xml
+android/.idea/gradle.xml
+android/.idea/jarRepositories.xml
+android/.idea/misc.xml
+android/.idea/vcs.xml

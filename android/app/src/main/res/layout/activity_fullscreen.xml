@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:theme="@style/ThemeOverlay.Rcsnowblowerandroid.FullscreenContainer"
+    tools:context=".FullscreenActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <TableLayout
+        android:id="@+id/button_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
+
+            <ImageButton
+                android:id="@+id/forward_left"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:rotation="45"
+                android:rotationX="0"
+                app:srcCompat="@drawable/abc_vector_test" />
+
+            <ImageButton
+                android:id="@+id/forward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rotation="90"
+                app:srcCompat="@drawable/abc_vector_test" />
+
+            <ImageButton
+                android:id="@+id/forward_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rotation="135"
+                app:srcCompat="@drawable/abc_vector_test" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/full_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/abc_vector_test" />
+
+            <Button
+                android:id="@+id/stop"
+                android:layout_width="28dp"
+                android:layout_height="match_parent"
+                android:text="S" />
+
+            <ImageButton
+                android:id="@+id/full_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotationX="0"
+                android:rotationY="180"
+                app:srcCompat="@drawable/abc_vector_test" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/backward_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="backward_left"
+                android:rotation="-45"
+                app:srcCompat="@drawable/abc_vector_test" />
+
+            <ImageButton
+                android:id="@+id/backward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rotation="-90"
+                app:srcCompat="@drawable/abc_vector_test" />
+
+            <ImageButton
+                android:id="@+id/backward_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="backward_right"
+                android:rotation="225"
+                app:srcCompat="@drawable/abc_vector_test" />
+        </TableRow>
+
+    </TableLayout>
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+</RelativeLayout>
