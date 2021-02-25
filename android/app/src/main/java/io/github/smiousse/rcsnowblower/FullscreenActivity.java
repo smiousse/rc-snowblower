@@ -99,19 +99,19 @@ public class FullscreenActivity extends AppCompatActivity {
         forwardRight.setOnTouchListener(new ButtonActionOnTouchListener("M", "S"));
 
         ImageButton backward = (ImageButton) findViewById(R.id.backward);
-        forward.setOnTouchListener(new ButtonActionOnTouchListener("B", "S"));
+        backward.setOnTouchListener(new ButtonActionOnTouchListener("B", "S"));
 
         ImageButton backwardLeft = (ImageButton) findViewById(R.id.backward_left);
-        forward.setOnTouchListener(new ButtonActionOnTouchListener("P", "S"));
+        backwardLeft.setOnTouchListener(new ButtonActionOnTouchListener("P", "S"));
 
         ImageButton backwardRight = (ImageButton) findViewById(R.id.backward_right);
-        forward.setOnTouchListener(new ButtonActionOnTouchListener("O", "S"));
+        backwardRight.setOnTouchListener(new ButtonActionOnTouchListener("O", "S"));
 
         ImageButton left = (ImageButton) findViewById(R.id.full_left);
-        forward.setOnTouchListener(new ButtonActionOnTouchListener("L", "S"));
+        left.setOnTouchListener(new ButtonActionOnTouchListener("L", "S"));
 
         ImageButton right = (ImageButton) findViewById(R.id.full_right);
-        forward.setOnTouchListener(new ButtonActionOnTouchListener("R", "S"));
+        right.setOnTouchListener(new ButtonActionOnTouchListener("R", "S"));
 
     }
 
