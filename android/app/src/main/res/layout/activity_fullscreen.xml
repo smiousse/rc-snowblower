@@ -153,6 +153,96 @@
                     android:layout_height="match_parent" />
             </TableLayout>
 
+            <TableLayout
+                android:id="@+id/button_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="200px">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false">
+
+                    <ImageButton
+                        android:id="@+id/forward_left"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="-135"
+                        android:rotationX="0" />
+
+                    <ImageButton
+                        android:id="@+id/forward"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="-90" />
+
+                    <ImageButton
+                        android:id="@+id/forward_right"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="-45" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/full_left"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="-180" />
+
+                    <ImageButton
+                        android:id="@+id/stop"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:background="@drawable/stop_button" />
+
+                    <ImageButton
+                        android:id="@+id/full_right"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:background="@drawable/arrow_button"
+                        android:rotationX="0"
+                        android:rotationY="0" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/backward_left"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:background="@drawable/arrow_button"
+                        android:contentDescription="backward_left"
+                        android:rotation="135" />
+
+                    <ImageButton
+                        android:id="@+id/backward"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="90" />
+
+                    <ImageButton
+                        android:id="@+id/backward_right"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:background="@drawable/arrow_button"
+                        android:contentDescription="backward_right"
+                        android:rotation="45" />
+                </TableRow>
+
+            </TableLayout>
+
         </TableRow>
 
         <TableRow
@@ -168,97 +258,8 @@
                 android:layout_height="wrap_content" />
 
             <Space
-                android:layout_width="800px"
-                android:layout_height="wrap_content" />
-
-            <TableLayout
-                android:id="@+id/button_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false">
-
-                    <ImageButton
-                        android:id="@+id/forward_left"
-                        android:layout_width="150px"
-                        android:layout_height="150px"
-                        android:background="@drawable/arrow_button"
-                        android:rotation="-135"
-                        android:rotationX="0" />
-
-                    <ImageButton
-                        android:id="@+id/forward"
-                        android:layout_width="150px"
-                        android:layout_height="150px"
-                        android:background="@drawable/arrow_button"
-                        android:rotation="-90" />
-
-                    <ImageButton
-                        android:id="@+id/forward_right"
-                        android:layout_width="150px"
-                        android:layout_height="150px"
-                        android:background="@drawable/arrow_button"
-                        android:rotation="-45" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageButton
-                        android:id="@+id/full_left"
-                        android:layout_width="150px"
-                        android:layout_height="150px"
-                        android:background="@drawable/arrow_button"
-                        android:rotation="-180" />
-
-                    <ImageButton
-                        android:id="@+id/stop"
-                        android:layout_width="150px"
-                        android:layout_height="150px"
-                        android:background="@drawable/stop_button" />
-
-                    <ImageButton
-                        android:id="@+id/full_right"
-                        android:layout_width="150px"
-                        android:layout_height="150px"
-                        android:background="@drawable/arrow_button"
-                        android:rotationX="0"
-                        android:rotationY="0" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageButton
-                        android:id="@+id/backward_left"
-                        android:layout_width="150px"
-                        android:layout_height="150px"
-                        android:background="@drawable/arrow_button"
-                        android:contentDescription="backward_left"
-                        android:rotation="135" />
-
-                    <ImageButton
-                        android:id="@+id/backward"
-                        android:layout_width="150px"
-                        android:layout_height="150px"
-                        android:background="@drawable/arrow_button"
-                        android:rotation="90" />
-
-                    <ImageButton
-                        android:id="@+id/backward_right"
-                        android:layout_width="150px"
-                        android:layout_height="150px"
-                        android:background="@drawable/arrow_button"
-                        android:contentDescription="backward_right"
-                        android:rotation="45" />
-                </TableRow>
-
-            </TableLayout>
+                android:layout_width="600px"
+                android:layout_height="20px" />
 
         </TableRow>
 
@@ -280,20 +281,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50px"
-                        android:layout_marginTop="30px"
+                        android:backgroundTint="@android:color/black"
                         android:text="Connect"
-                        app:iconTint="#1A0E0E" />
+                        android:textColor="#FFFFFF" />
                 </TableRow>
 
             </TableLayout>
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="200px" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -311,12 +304,58 @@
                         android:id="@+id/disconnect"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30px"
-                        android:layout_marginTop="30px"
-                        android:text="Disconnect" />
+                        android:layout_marginLeft="0px"
+                        android:backgroundTint="@android:color/black"
+                        android:text="Disconnect"
+                        android:textColor="#FFFFFF" />
                 </TableRow>
 
             </TableLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="200px">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/speed_minus"
+                        android:layout_width="150px"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/black"
+                        android:text="-"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:id="@+id/speed"
+                        android:layout_width="100px"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30px"
+                        android:layout_marginRight="30px"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="#000000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/speed_plus"
+                        android:layout_width="150px"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@android:color/black"
+                        android:text="+"
+                        android:textColor="#FFFFFF" />
+                </TableRow>
+
+            </TableLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="150px" />
 
         </TableRow>
 

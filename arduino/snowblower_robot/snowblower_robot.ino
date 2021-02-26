@@ -72,16 +72,16 @@ void setup() {
 
 void loop() {
   
-  if (radio.available()) {
+/*  if (radio.available()) {
     char text[32] = "";
     radio.read(&text, sizeof(text));
     bluetooth_val = text[0];
-  } 
+  }*/ 
   
-  //if (Serial.available()){
-  //  bluetooth_val = Serial.read();
- //   Serial.println(bluetooth_val);
-  //}
+  if (Serial.available()){
+    bluetooth_val = Serial.read();
+    Serial.println(bluetooth_val);
+  }
 
   switch (bluetooth_val){
    case 'F': // snowblower forward
@@ -119,17 +119,41 @@ void loop() {
       robot.stop();
       snowblower.stop();
       break;
-   case 'X': // snowblower decrease speed
-      robot.decreaseSpeed();
-      snowblower.decreaseSpeed();      
+   case '1': 
+      robot.setSpeed(10);  
+      bluetooth_val = '0';
       break;
-   case 'Y': // snowblower increase speed 
-      robot.increaseSpeed();
-      snowblower.increaseSpeed();
+   case '2': 
+      robot.setSpeed(40); 
+      bluetooth_val = '0'; 
       break;
-   case 'U': // snowblower reset speed
-      robot.resetSpeed();
-      snowblower.resetSpeed();
+   case '3': 
+      robot.setSpeed(70); 
+      bluetooth_val = '0';  
+      break;
+   case '4': 
+      robot.setSpeed(100);
+      bluetooth_val = '0';   
+      break;
+   case '5': 
+      robot.setSpeed(130);  
+      bluetooth_val = '0'; 
+      break;
+   case '6': 
+      robot.setSpeed(160); 
+      bluetooth_val = '0';  
+      break;
+   case '7':
+      robot.setSpeed(190);  
+      bluetooth_val = '0'; 
+      break;
+   case '8': 
+      robot.setSpeed(220); 
+      bluetooth_val = '0';  
+      break;
+   case '9': 
+      robot.setSpeed(248);
+      bluetooth_val = '0';   
       break;
    case 'G': // Snowblower up  
       upDown.forward();

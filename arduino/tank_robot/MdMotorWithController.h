@@ -1,12 +1,12 @@
-#ifndef MultiDirectionalMotor_h
-#define MultiDirectionalMotor_h
+#ifndef MdMotorWithController_h
+#define MdMotorWithController_h
 
 #include "Arduino.h"
 
-class MultiDirectionalMotor
+class MdMotorWithController
 {
   public:
-    MultiDirectionalMotor(String name, int motorLeftCtrlPin, int motorRightCtrlPin, int motorLeftSpeedPin, int motorRightSpeedPin);
+    MdMotorWithController(String name, int motorLeftCtrlPin, int motorRightCtrlPin, int motorLeftSpeedPin, int motorRightSpeedPin, int turnMode);
 
     void forward();
     void reverse();
@@ -21,12 +21,16 @@ class MultiDirectionalMotor
     void increaseSpeed();
     void decreaseSpeed();
     void resetSpeed();
+    void setSpeed(int speed);
 
   private:
     String _name;
-
+    int _currentAction;
     int _currentSpeed;
+
+    int _fixedTurnSpeed;
     int _turnOffset;
+    int _turnMode;
 
     int _motorLeftOffset;
     int _motorRightOffset;
@@ -35,9 +39,8 @@ class MultiDirectionalMotor
     int _motorRightCtrlPin;
     int _motorRightSpeedPin;
     int _motorLeftSpeedPin;
-    void _debug(String debugValue);
-
     int _calculateSpeed(String actionType, int motorOffset);
+    void _refreshCurrentSpeed();
 };
 
 #endif

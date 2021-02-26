@@ -15,6 +15,7 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
 
@@ -42,6 +44,9 @@ public class FullscreenActivity extends AppCompatActivity {
     private BluetoothGatt mGatt = null;
     private BluetoothDevice bluetoothDevice;
 
+    private Integer currentSpeed = new Integer(5);
+    private TextView speed;
+
     private static final String DEVICE_MAC_ADDRESS = "64:33:DB:92:BC:A5";
 
     @Override
@@ -51,9 +56,10 @@ public class FullscreenActivity extends AppCompatActivity {
         //Remove title bar
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-//Remove notification bar
+        //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         setContentView(R.layout.activity_fullscreen);
 
@@ -168,6 +174,36 @@ public class FullscreenActivity extends AppCompatActivity {
 
         ImageButton snowBlowerDown = (ImageButton) findViewById(R.id.snow_chute_right);
         snowBlowerDown.setOnTouchListener(new ButtonActionOnTouchListener("H", "T"));
+
+        Button speedMinus = (Button) findViewById(R.id.speed_minus);
+        speedMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentSpeed = currentSpeed.intValue() - 1;
+                if(currentSpeed.intValue() < 1){
+                    currentSpeed = Integer.valueOf(1);
+                }
+                speed.setText(currentSpeed.toString());
+                sendAction(currentSpeed.toString());
+            }
+        });
+
+        Button speedPlus = (Button) findViewById(R.id.speed_plus);
+        speedPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentSpeed = currentSpeed.intValue() + 1;
+                if(currentSpeed.intValue() > 9){
+                    currentSpeed = Integer.valueOf(9);
+                }
+                speed.setText(currentSpeed.toString());
+                sendAction(currentSpeed.toString());
+            }
+        });
+
+
+        speed = (TextView)findViewById(R.id.speed);
+        speed.setText(currentSpeed.toString());
 
     }
 

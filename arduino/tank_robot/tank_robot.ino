@@ -1,14 +1,10 @@
-#include "MultiDirectionalMotor.h"
+#include "MdMotorWithController.h"
 
 //Array, used to store the data of pattern, can be calculated by yourself or obtained from the modulus tool
 unsigned char start01[] = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80,0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
-//unsigned char front[] = {0x00,0x00,0x00,0x00,0x00,0x24,0x12,0x09,0x12,0x24,0x00,0x00,0x00,0x00,0x00,0x00};
 unsigned char front[] = {0x00,0x00,0x00,0x00,0x08,0x0c,0xfe,0xff,0xfe,0x0c,0x08,0x00,0x00,0x00,0x00,0x00};
-//unsigned char back[] = {0x00,0x00,0x00,0x00,0x00,0x24,0x48,0x90,0x48,0x24,0x00,0x00,0x00,0x00,0x00,0x00};
 unsigned char back[] = {0x00,0x00,0x00,0x00,0x10,0x30,0x7f,0xff,0x7f,0x30,0x10,0x00,0x00,0x00,0x00,0x00};
-//unsigned char left[] = {0x00,0x00,0x00,0x00,0x00,0x00,0x44,0x28,0x10,0x44,0x28,0x10,0x44,0x28,0x10,0x00};
 unsigned char left[] = {0x00, 0x00, 0x00, 0x18, 0x3c, 0x7e, 0xff, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00, 0x00, 0x00};
-//unsigned char right[] = {0x00,0x10,0x28,0x44,0x10,0x28,0x44,0x10,0x28,0x44,0x00,0x00,0x00,0x00,0x00,0x00};
 unsigned char right[] = {0x00, 0x00, 0x00, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0xff, 0x7e, 0x3c, 0x18, 0x00, 0x00, 0x00};
 unsigned char STOP01[] = {0x2E,0x2A,0x3A,0x00,0x02,0x3E,0x02,0x00,0x3E,0x22,0x3E,0x00,0x3E,0x0A,0x0E,0x00};
 unsigned char clear[] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
@@ -21,7 +17,7 @@ unsigned char clear[] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 #define MR_Ctrl 12  //define direction control pin of right motor
 #define MR_PWM 3    //define PWM control pin of right motor
 
-MultiDirectionalMotor robot("robot", ML_Ctrl, MR_Ctrl, ML_PWM, MR_PWM);
+MdMotorWithController robot("robot", ML_Ctrl, MR_Ctrl, ML_PWM, MR_PWM, 2);
 
 char bluetooth_val = 'S'; //save the value of Bluetooth reception
 
@@ -40,64 +36,103 @@ void setup() {
 
 void loop() {
   
-
   if (Serial.available()){
     bluetooth_val = Serial.read();
     Serial.println(bluetooth_val);
   }
   
-
   switch (bluetooth_val){
-   case 'F':  //forward command
-      //robot.forward();
-      matrix_display(front);  // show forward design
+    case 'F': // snowblower forward
+      robot.forward();
+      matrix_display(front);
       break;
-   case 'B':  //Back command
-      //robot.reverse();
-      matrix_display(back);  //show back pattern
+   case 'B': // snowblower backward
+      robot.reverse();
+      matrix_display(back);
       break;
-   case 'L':  // left-turning instruction
-      //robot.fullLeft();
-      matrix_display(left);  //show “left-turning” sign 
+   case 'L': // snowblower turn left
+      robot.fullLeft();
+      matrix_display(left);
       break;
-   case 'D':  // left-turning instruction
-      //robot.forwardLeft();
-      matrix_display(left);  //show “left-turning” sign 
+   case 'R': // snowblower turn right
+      robot.fullRight();  
+      matrix_display(right);
+      break;  
+   case 'M': // Snowblower forward and right
+      robot.forwardRight();
+      matrix_display(right);
       break;
-   case 'G':  // left-turning instruction
-      //robot.reverseLeft();
-      matrix_display(left);  //show “left-turning” sign 
+   case 'N': // Snowblower forward and left
+      robot.forwardLeft();
+      matrix_display(left);
       break;
-   case 'R':  //right-turning instruction
-      //robot.fullRight();
-      matrix_display(right);  //display right-turning sign      
+   case 'O': // Snowblower reverse and right
+      robot.reverseRight();
+      matrix_display(right);
       break;
-   case 'C':  //right-turning instruction
-      //robot.forwardRight();
-      matrix_display(right);  //display right-turning sign      
+   case 'P': // Snowblower reverse and left
+      robot.reverseLeft();
+      matrix_display(left);
+      break;      
+   case 'S': // snowblower stop
+      robot.stop();
+      matrix_display(STOP01);      
       break;
-   case 'H':  // left-turning instruction
-      //robot.reverseRight();
-      matrix_display(left);  //show “left-turning” sign 
+   case '1': 
+      robot.setSpeed(10);  
+      bluetooth_val = '0';
       break;
-   case 'S':  //stop command
-      //robot.stop();
-      matrix_display(STOP01);  //show stop picture
+   case '2': 
+      robot.setSpeed(40); 
+      bluetooth_val = '0'; 
       break;
-   case 'X':  //stop command
-      //robot.decreaseSpeed();
-      //bluetooth_val='0';
-       
+   case '3': 
+      robot.setSpeed(70); 
+      bluetooth_val = '0';  
       break;
-   case 'Y':  //stop command
-      //robot.increaseSpeed();
-      bluetooth_val='0';
-
+   case '4': 
+      robot.setSpeed(100);
+      bluetooth_val = '0';   
       break;
-   case 'U':  //stop command
-      //robot.resetSpeed();
-
+   case '5': 
+      robot.setSpeed(130);  
+      bluetooth_val = '0'; 
       break;
+   case '6': 
+      robot.setSpeed(160); 
+      bluetooth_val = '0';  
+      break;
+   case '7':
+      robot.setSpeed(190);  
+      bluetooth_val = '0'; 
+      break;
+   case '8': 
+      robot.setSpeed(220); 
+      bluetooth_val = '0';  
+      break;
+   case '9': 
+      robot.setSpeed(248);
+      bluetooth_val = '0';   
+      break;
+      /*
+   case 'G': // Snowblower up  
+      upDown.forward();
+      break;
+   case 'H': // Snowblower down  
+      upDown.reverse();
+      break;
+   case 'D': // Snowfall left
+      snowfall.forward();
+      break;
+   case 'C': // Snowfall right      
+      snowfall.reverse();
+      break;
+   case 'T': // Snowfall stop
+      snowfall.stop();
+      break;
+   case 'V': // Snowblower UpDown stop
+      upDown.stop();
+      break;*/
   }
    
 }
