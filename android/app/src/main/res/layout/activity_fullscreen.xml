@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fullscreen_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/snowfall"
     android:theme="@style/ThemeOverlay.Rcsnowblowerandroid.FullscreenContainer"
     tools:context=".FullscreenActivity">
 
@@ -13,89 +14,310 @@
          TextureView, etc. -->
 
     <TableLayout
-        android:id="@+id/button_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false">
+            android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/forward_left"
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:rotation="45"
-                android:rotationX="0"
-                app:srcCompat="@drawable/abc_vector_test" />
+                android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/forward"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:rotation="90"
-                app:srcCompat="@drawable/abc_vector_test" />
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/forward_right"
+                    <Space
+                        android:layout_width="50px"
+                        android:layout_height="250px" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:layout_marginTop="20px"
+                        app:srcCompat="@drawable/snowchute_icon" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/snow_chute_left"
+                                android:layout_width="150px"
+                                android:layout_height="150px"
+                                android:background="@drawable/arrow_button"
+                                android:rotation="-180" />
+
+                            <ImageButton
+                                android:id="@+id/snow_chute_right"
+                                android:layout_width="150px"
+                                android:layout_height="150px"
+                                android:background="@drawable/arrow_button" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:rotation="135"
-                app:srcCompat="@drawable/abc_vector_test" />
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="40px"
+                    android:paddingTop="40px">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="200px"
+                        android:layout_height="200px"
+                        android:layout_marginTop="30px"
+                        app:srcCompat="@drawable/snowblower_icon" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="300px" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/snowblower_up"
+                                android:layout_width="150px"
+                                android:layout_height="150px"
+                                android:background="@drawable/arrow_button"
+                                android:rotation="-90" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/snowblower_down"
+                                android:layout_width="150px"
+                                android:layout_height="150px"
+                                android:background="@drawable/arrow_button"
+                                android:rotation="90" />
+                        </TableRow>
+
+                    </TableLayout>
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </TableLayout>
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/full_left"
+            <Space
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/abc_vector_test" />
+                android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/stop"
-                android:layout_width="28dp"
-                android:layout_height="match_parent"
-                android:text="S" />
-
-            <ImageButton
-                android:id="@+id/full_right"
+            <Space
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rotationX="0"
-                android:rotationY="180"
-                app:srcCompat="@drawable/abc_vector_test" />
+                android:layout_height="wrap_content" />
+
+            <Space
+                android:layout_width="800px"
+                android:layout_height="wrap_content" />
+
+            <TableLayout
+                android:id="@+id/button_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false">
+
+                    <ImageButton
+                        android:id="@+id/forward_left"
+                        android:layout_width="150px"
+                        android:layout_height="150px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="-135"
+                        android:rotationX="0" />
+
+                    <ImageButton
+                        android:id="@+id/forward"
+                        android:layout_width="150px"
+                        android:layout_height="150px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="-90" />
+
+                    <ImageButton
+                        android:id="@+id/forward_right"
+                        android:layout_width="150px"
+                        android:layout_height="150px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="-45" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/full_left"
+                        android:layout_width="150px"
+                        android:layout_height="150px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="-180" />
+
+                    <ImageButton
+                        android:id="@+id/stop"
+                        android:layout_width="150px"
+                        android:layout_height="150px"
+                        android:background="@drawable/stop_button" />
+
+                    <ImageButton
+                        android:id="@+id/full_right"
+                        android:layout_width="150px"
+                        android:layout_height="150px"
+                        android:background="@drawable/arrow_button"
+                        android:rotationX="0"
+                        android:rotationY="0" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/backward_left"
+                        android:layout_width="150px"
+                        android:layout_height="150px"
+                        android:background="@drawable/arrow_button"
+                        android:contentDescription="backward_left"
+                        android:rotation="135" />
+
+                    <ImageButton
+                        android:id="@+id/backward"
+                        android:layout_width="150px"
+                        android:layout_height="150px"
+                        android:background="@drawable/arrow_button"
+                        android:rotation="90" />
+
+                    <ImageButton
+                        android:id="@+id/backward_right"
+                        android:layout_width="150px"
+                        android:layout_height="150px"
+                        android:background="@drawable/arrow_button"
+                        android:contentDescription="backward_right"
+                        android:rotation="45" />
+                </TableRow>
+
+            </TableLayout>
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingTop="50px">
 
-            <ImageButton
-                android:id="@+id/backward_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="backward_left"
-                android:rotation="-45"
-                app:srcCompat="@drawable/abc_vector_test" />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/backward"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rotation="-90"
-                app:srcCompat="@drawable/abc_vector_test" />
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/backward_right"
+                    <Button
+                        android:id="@+id/connect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50px"
+                        android:layout_marginTop="30px"
+                        android:text="Connect"
+                        app:iconTint="#1A0E0E" />
+                </TableRow>
+
+            </TableLayout>
+
+            <Space
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="backward_right"
-                android:rotation="225"
-                app:srcCompat="@drawable/abc_vector_test" />
+                android:layout_height="200px" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Space
+                        android:layout_width="100px"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/disconnect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30px"
+                        android:layout_marginTop="30px"
+                        android:text="Disconnect" />
+                </TableRow>
+
+            </TableLayout>
+
         </TableRow>
 
     </TableLayout>

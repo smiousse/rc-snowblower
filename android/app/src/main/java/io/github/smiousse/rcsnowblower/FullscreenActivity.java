@@ -21,6 +21,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -46,7 +48,23 @@ public class FullscreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+//Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         setContentView(R.layout.activity_fullscreen);
+
+        View mContentView = findViewById(R.id.fullscreen_content);
+
+        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         // Use this check to determine whether BLE is supported on the device. Then
         // you can selectively disable BLE-related features.
@@ -79,16 +97,38 @@ public class FullscreenActivity extends AppCompatActivity {
         }
 
         bluetoothDevice = bluetoothManager.getAdapter().getRemoteDevice(DEVICE_MAC_ADDRESS);
-        if(bluetoothDevice != null){
-            Log.i("BluetoothDevice","found device " + bluetoothDevice.getName());
-            connectToDevice(bluetoothDevice);
-            //sendStop();
-        } else {
-            Log.e("BluetoothDevice"," CANT find device for " + DEVICE_MAC_ADDRESS);
-        }
     }
 
     private void initButtons(){
+
+        Button connect = (Button) findViewById(R.id.connect);
+        connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(bluetoothDevice != null && bluetoothDevice.getName() != null){
+                    Log.i("BluetoothDevice","found device " + bluetoothDevice.getName());
+                    connectToDevice(bluetoothDevice);
+                    //sendStop();
+                } else {
+                    Log.e("BluetoothDevice"," CANT find device for " + DEVICE_MAC_ADDRESS);
+                }
+            }
+        });
+
+        Button disconnect = (Button) findViewById(R.id.disconnect);
+        disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mGatt != null) {
+                    mGatt.disconnect();
+                    mGatt =null;
+                    bluetoothDevice = null;
+                    Toast tdc =Toast.makeText(getApplicationContext(), "Disconnected From Device", Toast.LENGTH_SHORT);
+                    tdc.show();
+                }
+            }
+        });
+
         ImageButton forward = (ImageButton) findViewById(R.id.forward);
         forward.setOnTouchListener(new ButtonActionOnTouchListener("F", "S"));
 
@@ -113,23 +153,47 @@ public class FullscreenActivity extends AppCompatActivity {
         ImageButton right = (ImageButton) findViewById(R.id.full_right);
         right.setOnTouchListener(new ButtonActionOnTouchListener("R", "S"));
 
+        ImageButton stop = (ImageButton) findViewById(R.id.stop);
+        stop.setOnTouchListener(new ButtonActionOnTouchListener("S", "S"));
+
+
+        ImageButton snowChuteLeft = (ImageButton) findViewById(R.id.snow_chute_left);
+        snowChuteLeft.setOnTouchListener(new ButtonActionOnTouchListener("D", "T"));
+
+        ImageButton snowChuteRight = (ImageButton) findViewById(R.id.snow_chute_right);
+        snowChuteRight.setOnTouchListener(new ButtonActionOnTouchListener("D", "T"));
+
+        ImageButton snowBlowerUp = (ImageButton) findViewById(R.id.snowblower_up);
+        snowBlowerUp.setOnTouchListener(new ButtonActionOnTouchListener("G", "V"));
+
+        ImageButton snowBlowerDown = (ImageButton) findViewById(R.id.snow_chute_right);
+        snowBlowerDown.setOnTouchListener(new ButtonActionOnTouchListener("H", "T"));
+
     }
 
     private void connectToDevice(BluetoothDevice device) {
         if (mGatt == null) {
             mGatt = device.connectGatt(this, false, gattCallback);
+
+            Toast tdc =Toast.makeText(getApplicationContext(), "Successfully connected to Device", Toast.LENGTH_SHORT);
+            tdc.show();
         }
     }
 
     private void sendAction(String action){
-        if (mGatt != null) {
+        try {
+            if (mGatt != null) {
 
-            BluetoothGattService service = mGatt.getService(UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb"));
-            BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb"));
+                BluetoothGattService service = mGatt.getService(UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb"));
+                BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb"));
 
-            characteristic.setValue(action.getBytes());
-            mGatt.writeCharacteristic(characteristic);
+                characteristic.setValue(action.getBytes());
+                mGatt.writeCharacteristic(characteristic);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 
     private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
@@ -140,6 +204,8 @@ public class FullscreenActivity extends AppCompatActivity {
                 case BluetoothProfile.STATE_CONNECTED:
                     Log.i("gattCallback", "STATE_CONNECTED");
                     gatt.discoverServices();
+
+
                     break;
                 case BluetoothProfile.STATE_DISCONNECTED:
                     Log.e("gattCallback", "STATE_DISCONNECTED");
