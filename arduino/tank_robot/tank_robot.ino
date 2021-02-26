@@ -1,4 +1,5 @@
 #include "MdMotorWithController.h"
+#include <Servo.h> 
 
 //Array, used to store the data of pattern, can be calculated by yourself or obtained from the modulus tool
 unsigned char start01[] = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80,0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
@@ -17,9 +18,17 @@ unsigned char clear[] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 #define MR_Ctrl 12  //define direction control pin of right motor
 #define MR_PWM 3    //define PWM control pin of right motor
 
+#define SB_UP_DOWN 8  //define direction control pin of right motor
+#define SF_LEFT_RIGHT 9    //define PWM control pin of right motor
+
 MdMotorWithController robot("robot", ML_Ctrl, MR_Ctrl, ML_PWM, MR_PWM, 2);
 
 char bluetooth_val = 'S'; //save the value of Bluetooth reception
+int currentSbUpDownPos = 90;
+int currentSfLeftRightPos = 90;
+
+Servo sbUpDownServo;  
+Servo sfLeftRightServo;
 
 void setup() {
 
@@ -32,6 +41,11 @@ void setup() {
 
   robot.init();
 
+  sbUpDownServo.attach(8); 
+  sfLeftRightServo.attach(9);
+
+  sbUpDownServo.write(currentSbUpDownPos);  
+  sfLeftRightServo.write(currentSfLeftRightPos); 
 }
 
 void loop() {
@@ -114,25 +128,53 @@ void loop() {
       robot.setSpeed(248);
       bluetooth_val = '0';   
       break;
-      /*
+      
    case 'G': // Snowblower up  
-      upDown.forward();
+      currentSbUpDownPos = currentSbUpDownPos+10;
+      if(currentSbUpDownPos > 180){
+        currentSbUpDownPos = 180;
+      }
+      sbUpDownServo.write(currentSbUpDownPos);
+      Serial.print("currentSbUpDownPos = ");
+      Serial.println(currentSbUpDownPos);
+      delay(500); 
       break;
    case 'H': // Snowblower down  
-      upDown.reverse();
+      currentSbUpDownPos = currentSbUpDownPos-10;
+      if(currentSbUpDownPos < 0){
+        currentSbUpDownPos = 0;
+      }
+      sbUpDownServo.write(currentSbUpDownPos);
+      Serial.print("currentSbUpDownPos = ");
+      Serial.println(currentSbUpDownPos);
+      delay(500); 
       break;
    case 'D': // Snowfall left
-      snowfall.forward();
+      currentSfLeftRightPos = currentSfLeftRightPos+10;
+      if(currentSfLeftRightPos > 180){
+        currentSfLeftRightPos = 180;
+      }
+      sfLeftRightServo.write(currentSfLeftRightPos);
+      Serial.print("currentSfLeftRightPos = ");
+      Serial.println(currentSfLeftRightPos);
+      delay(500); 
       break;
    case 'C': // Snowfall right      
-      snowfall.reverse();
+      currentSfLeftRightPos = currentSfLeftRightPos-10;
+      if(currentSfLeftRightPos < 0){
+        currentSfLeftRightPos = 0;
+      }
+      sfLeftRightServo.write(currentSfLeftRightPos);
+      Serial.print("currentSfLeftRightPos = ");
+      Serial.println(currentSfLeftRightPos);
+      delay(500); 
       break;
    case 'T': // Snowfall stop
-      snowfall.stop();
+      //snowfall.stop();
       break;
    case 'V': // Snowblower UpDown stop
-      upDown.stop();
-      break;*/
+      //upDown.stop();
+      break;
   }
    
 }

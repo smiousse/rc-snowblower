@@ -169,13 +169,13 @@ public class FullscreenActivity extends AppCompatActivity {
         snowChuteLeft.setOnTouchListener(new ButtonActionOnTouchListener("D", "T"));
 
         ImageButton snowChuteRight = (ImageButton) findViewById(R.id.snow_chute_right);
-        snowChuteRight.setOnTouchListener(new ButtonActionOnTouchListener("D", "T"));
+        snowChuteRight.setOnTouchListener(new ButtonActionOnTouchListener("C", "T"));
 
         ImageButton snowBlowerUp = (ImageButton) findViewById(R.id.snowblower_up);
         snowBlowerUp.setOnTouchListener(new ButtonActionOnTouchListener("G", "V"));
 
-        ImageButton snowBlowerDown = (ImageButton) findViewById(R.id.snow_chute_right);
-        snowBlowerDown.setOnTouchListener(new ButtonActionOnTouchListener("H", "T"));
+        ImageButton snowBlowerDown = (ImageButton) findViewById(R.id.snowblower_down);
+        snowBlowerDown.setOnTouchListener(new ButtonActionOnTouchListener("H", "V"));
 
         Button speedMinus = (Button) findViewById(R.id.speed_minus);
         speedMinus.setOnClickListener(new View.OnClickListener() {
