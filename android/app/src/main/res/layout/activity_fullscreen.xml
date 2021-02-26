@@ -138,19 +138,32 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent" >
+
+                    <ImageButton
+                        android:id="@+id/blow"
+                        android:layout_width="250px"
+                        android:layout_height="250px"
+                        android:layout_marginLeft="250px"
+                        android:layout_marginTop="250px"
+                        android:background="@drawable/forward_button"
+                        android:rotation="-90" />
+                </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent" >
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    <ImageButton
+                        android:id="@+id/backup"
+                        android:layout_width="250px"
+                        android:layout_height="250px"
+                        android:layout_marginLeft="250px"
+                        android:layout_marginTop="30px"
+                        android:background="@drawable/forward_button"
+                        android:rotation="90" />
+                </TableRow>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
             </TableLayout>
 
             <TableLayout

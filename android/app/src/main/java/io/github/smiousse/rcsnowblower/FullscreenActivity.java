@@ -49,6 +49,9 @@ public class FullscreenActivity extends AppCompatActivity {
 
     private static final String DEVICE_MAC_ADDRESS = "64:33:DB:92:BC:A5";
 
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,12 +91,9 @@ public class FullscreenActivity extends AppCompatActivity {
 
         initButtons();
 
-
         // Initializes Bluetooth adapter.
-        bluetoothManager =
-                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
-
 
         // Ensures Bluetooth is available on the device and it is enabled. If not,
         // displays a dialog requesting user permission to enable Bluetooth.
@@ -105,6 +105,9 @@ public class FullscreenActivity extends AppCompatActivity {
         bluetoothDevice = bluetoothManager.getAdapter().getRemoteDevice(DEVICE_MAC_ADDRESS);
     }
 
+    /**
+     *
+     */
     private void initButtons(){
 
         Button connect = (Button) findViewById(R.id.connect);
@@ -162,7 +165,6 @@ public class FullscreenActivity extends AppCompatActivity {
         ImageButton stop = (ImageButton) findViewById(R.id.stop);
         stop.setOnTouchListener(new ButtonActionOnTouchListener("S", "S"));
 
-
         ImageButton snowChuteLeft = (ImageButton) findViewById(R.id.snow_chute_left);
         snowChuteLeft.setOnTouchListener(new ButtonActionOnTouchListener("D", "T"));
 
@@ -201,12 +203,54 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton blow = (ImageButton) findViewById(R.id.blow);
+        blow.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch(motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        doBlow();
+                        break;
+                }
+                return false;
+            }
+        });
+
+        ImageButton backup = (ImageButton) findViewById(R.id.backup);
+        backup.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch(motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        doBackup();
+                        break;
+                }
+                return false;
+            }
+        });
 
         speed = (TextView)findViewById(R.id.speed);
         speed.setText(currentSpeed.toString());
 
     }
 
+    /**
+     *
+     */
+    private void doBlow(){
+        sendAction("F");
+    }
+
+    /**
+     *
+     */
+    private void doBackup(){
+        sendAction("B");
+    }
+
+    /**
+     * @param device
+     */
     private void connectToDevice(BluetoothDevice device) {
         if (mGatt == null) {
             mGatt = device.connectGatt(this, false, gattCallback);
@@ -216,6 +260,9 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @param action
+     */
     private void sendAction(String action){
         try {
             if (mGatt != null) {
@@ -283,7 +330,9 @@ public class FullscreenActivity extends AppCompatActivity {
                     break;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
-                    sendAction(onReleaseAction);
+                    if(onReleaseAction != null && !onReleaseAction.isEmpty()) {
+                        sendAction(onReleaseAction);
+                    }
                     break;
             }
             return false;
