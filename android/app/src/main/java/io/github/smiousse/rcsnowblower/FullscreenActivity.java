@@ -47,7 +47,10 @@ public class FullscreenActivity extends AppCompatActivity {
     private Integer currentSpeed = new Integer(5);
     private TextView speed;
 
-    private static final String DEVICE_MAC_ADDRESS = "64:33:DB:92:BC:A5";
+    private static final String HMSOFT_DEVICE = "64:33:DB:92:BC:A5";
+    private static final String DSD_TECH_DEVICE = "60:77:71:BD:2B:25";
+
+    private static final String DEVICE_MAC_ADDRESS = DSD_TECH_DEVICE;
 
     /**
      * @param savedInstanceState
@@ -102,7 +105,7 @@ public class FullscreenActivity extends AppCompatActivity {
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
 
-        bluetoothDevice = bluetoothManager.getAdapter().getRemoteDevice(DEVICE_MAC_ADDRESS);
+
     }
 
     /**
@@ -114,10 +117,10 @@ public class FullscreenActivity extends AppCompatActivity {
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bluetoothDevice = bluetoothManager.getAdapter().getRemoteDevice(DEVICE_MAC_ADDRESS);
                 if(bluetoothDevice != null && bluetoothDevice.getName() != null){
                     Log.i("BluetoothDevice","found device " + bluetoothDevice.getName());
                     connectToDevice(bluetoothDevice);
-                    //sendStop();
                 } else {
                     Log.e("BluetoothDevice"," CANT find device for " + DEVICE_MAC_ADDRESS);
                 }
@@ -142,7 +145,7 @@ public class FullscreenActivity extends AppCompatActivity {
         forward.setOnTouchListener(new ButtonActionOnTouchListener("F", "S"));
 
         ImageButton forwardLeft = (ImageButton) findViewById(R.id.forward_left);
-        forwardLeft.setOnTouchListener(new ButtonActionOnTouchListener("N", "S"));
+        forwardLeft.setOnTouchListener(new ButtonActionOnTouchListener("Y", "S"));
 
         ImageButton forwardRight = (ImageButton) findViewById(R.id.forward_right);
         forwardRight.setOnTouchListener(new ButtonActionOnTouchListener("M", "S"));
@@ -154,7 +157,7 @@ public class FullscreenActivity extends AppCompatActivity {
         backwardLeft.setOnTouchListener(new ButtonActionOnTouchListener("P", "S"));
 
         ImageButton backwardRight = (ImageButton) findViewById(R.id.backward_right);
-        backwardRight.setOnTouchListener(new ButtonActionOnTouchListener("O", "S"));
+        backwardRight.setOnTouchListener(new ButtonActionOnTouchListener("W", "S"));
 
         ImageButton left = (ImageButton) findViewById(R.id.full_left);
         left.setOnTouchListener(new ButtonActionOnTouchListener("L", "S"));
@@ -163,19 +166,19 @@ public class FullscreenActivity extends AppCompatActivity {
         right.setOnTouchListener(new ButtonActionOnTouchListener("R", "S"));
 
         ImageButton stop = (ImageButton) findViewById(R.id.stop);
-        stop.setOnTouchListener(new ButtonActionOnTouchListener("S", "S"));
+        stop.setOnTouchListener(new ButtonActionOnTouchListener("S", null));
 
         ImageButton snowChuteLeft = (ImageButton) findViewById(R.id.snow_chute_left);
         snowChuteLeft.setOnTouchListener(new ButtonActionOnTouchListener("D", "T"));
 
         ImageButton snowChuteRight = (ImageButton) findViewById(R.id.snow_chute_right);
-        snowChuteRight.setOnTouchListener(new ButtonActionOnTouchListener("C", "T"));
+        snowChuteRight.setOnTouchListener(new ButtonActionOnTouchListener("Z", "T"));
 
         ImageButton snowBlowerUp = (ImageButton) findViewById(R.id.snowblower_up);
-        snowBlowerUp.setOnTouchListener(new ButtonActionOnTouchListener("G", "V"));
+        snowBlowerUp.setOnTouchListener(new ButtonActionOnTouchListener("G", "O"));
 
         ImageButton snowBlowerDown = (ImageButton) findViewById(R.id.snowblower_down);
-        snowBlowerDown.setOnTouchListener(new ButtonActionOnTouchListener("H", "V"));
+        snowBlowerDown.setOnTouchListener(new ButtonActionOnTouchListener("H", "O"));
 
         Button speedMinus = (Button) findViewById(R.id.speed_minus);
         speedMinus.setOnClickListener(new View.OnClickListener() {
@@ -266,7 +269,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private void sendAction(String action){
         try {
             if (mGatt != null) {
-
+                Log.i("sendAction", "action = " + action);
                 BluetoothGattService service = mGatt.getService(UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb"));
                 BluetoothGattCharacteristic characteristic = service.getCharacteristic(UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb"));
 
@@ -287,8 +290,6 @@ public class FullscreenActivity extends AppCompatActivity {
                 case BluetoothProfile.STATE_CONNECTED:
                     Log.i("gattCallback", "STATE_CONNECTED");
                     gatt.discoverServices();
-
-
                     break;
                 case BluetoothProfile.STATE_DISCONNECTED:
                     Log.e("gattCallback", "STATE_DISCONNECTED");
@@ -309,6 +310,7 @@ public class FullscreenActivity extends AppCompatActivity {
         @Override
         public void onCharacteristicRead(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic, int status) {
             Log.i("onCharacteristicRead", characteristic.toString());
+            sendAction("S");
         }
     };
 

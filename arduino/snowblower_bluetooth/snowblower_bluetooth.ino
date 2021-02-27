@@ -22,15 +22,10 @@ BdMotorWithRelay snowfall("snowfall", PIN_SNOW_FALL_FORWARD, PIN_SNOW_FALL_REVER
 
 
 void setup() {
-
   Serial.begin(9600); // Serial for debug
-
-
-
   snowblower.init();
   upDown.init();
   snowfall.init();
-
 }
 
 void loop() {
@@ -56,10 +51,10 @@ void loop() {
    case 'M': // Snowblower forward and right
       snowblower.forwardRight();
       break;
-   case 'N': // Snowblower forward and left
+   case 'Y': // Snowblower forward and left
       snowblower.forwardLeft();
       break;
-   case 'O': // Snowblower reverse and right
+   case 'W': // Snowblower reverse and right
       snowblower.reverseRight();
       break;
    case 'P': // Snowblower reverse and left
@@ -69,39 +64,39 @@ void loop() {
       snowblower.stop();
       break;
    case '1': 
-      snowblower.setSpeed(10);  
+      snowblower.setSpeed(30);  
       bluetooth_val = ' ';
       break;
    case '2': 
-      snowblower.setSpeed(40); 
+      snowblower.setSpeed(50); 
       bluetooth_val = ' '; 
       break;
    case '3': 
-      snowblower.setSpeed(70); 
+      snowblower.setSpeed(60); 
       bluetooth_val = ' ';  
       break;
    case '4': 
-      snowblower.setSpeed(100);
+      snowblower.setSpeed(80);
       bluetooth_val = ' ';   
       break;
    case '5': 
-      snowblower.setSpeed(130);  
+      snowblower.setSpeed(100);  
       bluetooth_val = ' '; 
       break;
    case '6': 
-      snowblower.setSpeed(160); 
+      snowblower.setSpeed(120); 
       bluetooth_val = ' ';  
       break;
    case '7':
-      snowblower.setSpeed(190);  
+      snowblower.setSpeed(140);  
       bluetooth_val = ' '; 
       break;
    case '8': 
-      snowblower.setSpeed(220); 
+      snowblower.setSpeed(150); 
       bluetooth_val = ' ';  
       break;
    case '9': 
-      snowblower.setSpeed(248);
+      snowblower.setSpeed(160);
       bluetooth_val = ' ';   
       break;
    case 'G': // Snowblower up  
@@ -110,13 +105,13 @@ void loop() {
    case 'H': // Snowblower down  
       upDown.reverse();
       break;
-   case 'V': // Snowblower UpDown stop
+   case 'O': // Snowblower UpDown stop
       upDown.stop();
       break;
    case 'D': // Snowfall left
       snowfall.forward();
       break;
-   case 'C': // Snowfall right      
+   case 'Z': // Snowfall right      
       snowfall.reverse();
       break;
    case 'T': // Snowfall stop

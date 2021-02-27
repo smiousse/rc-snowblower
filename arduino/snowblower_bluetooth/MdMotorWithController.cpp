@@ -9,10 +9,10 @@
 
 MdMotorWithController::MdMotorWithController(String name, int motorLeftCtrlPin, int motorRightCtrlPin, int motorLeftSpeedPin, int motorRightSpeedPin, int turnMode){
 
-  _fixedTurnSpeed = 60;
+  _fixedTurnSpeed = 80;
   _currentAction = AC_STOP;
-  _currentSpeed = 200;
-  _turnOffset = 54;
+  _currentSpeed = 100;
+  _turnOffset = 20;
   _turnMode = turnMode;
 
   _motorLeftOffset = 0;
@@ -82,7 +82,7 @@ void MdMotorWithController::forwardLeft(){
   digitalWrite(_motorRightCtrlPin,LOW);
 
   analogWrite(_motorRightSpeedPin, _calculateSpeed("turn", _motorRightOffset));
-  analogWrite(_motorLeftSpeedPin, _calculateSpeed("slow_turn", _motorLeftOffset));
+  analogWrite(_motorLeftSpeedPin, _calculateSpeed("normal", _motorLeftOffset));
 }
 
 void MdMotorWithController::forwardRight(){
@@ -90,7 +90,7 @@ void MdMotorWithController::forwardRight(){
   digitalWrite(_motorLeftCtrlPin,LOW);
   digitalWrite(_motorRightCtrlPin,LOW);
 
-  analogWrite(_motorRightSpeedPin, _calculateSpeed("slow_turn", _motorRightOffset));
+  analogWrite(_motorRightSpeedPin, _calculateSpeed("normal", _motorRightOffset));
   analogWrite(_motorLeftSpeedPin, _calculateSpeed("turn", _motorLeftOffset));
 }
 
@@ -100,7 +100,7 @@ void MdMotorWithController::reverseLeft(){
   digitalWrite(_motorRightCtrlPin,HIGH);
 
   analogWrite(_motorRightSpeedPin, _calculateSpeed("turn", _motorRightOffset));
-  analogWrite(_motorLeftSpeedPin, _calculateSpeed("slow_turn", _motorLeftOffset));
+  analogWrite(_motorLeftSpeedPin, _calculateSpeed("normal", _motorLeftOffset));
 }
 
 void MdMotorWithController::reverseRight(){
@@ -108,7 +108,7 @@ void MdMotorWithController::reverseRight(){
   digitalWrite(_motorLeftCtrlPin,HIGH);
   digitalWrite(_motorRightCtrlPin,HIGH);
 
-  analogWrite(_motorRightSpeedPin, _calculateSpeed("slow_turn", _motorRightOffset));
+  analogWrite(_motorRightSpeedPin, _calculateSpeed("normal", _motorRightOffset));
   analogWrite(_motorLeftSpeedPin, _calculateSpeed("turn", _motorLeftOffset));
 }
 
@@ -199,9 +199,6 @@ int MdMotorWithController::_calculateSpeed(String actionType, int motorOffset){
   if(calculatedSpeed < 0){
     calculatedSpeed=0;
   }
-
-  Serial.print("speed = ");
-  Serial.println(calculatedSpeed);
   
   return calculatedSpeed;
 }
