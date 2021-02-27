@@ -12,7 +12,7 @@ MdMotorWithController::MdMotorWithController(String name, int motorLeftCtrlPin, 
   _fixedTurnSpeed = 80;
   _currentAction = AC_STOP;
   _currentSpeed = 100;
-  _turnOffset = 20;
+  _turnOffset = 50;
   _turnMode = turnMode;
 
   _motorLeftOffset = 0;
