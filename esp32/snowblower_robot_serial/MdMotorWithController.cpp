@@ -23,11 +23,11 @@ SoftwareSerial MDDS60Serial(RX_PIN, TX_PIN);
 
 MdMotorWithController::MdMotorWithController(String name){
 
-  _fixedTurnSpeed = 32;
+  _fixedTurnSpeed = 40;
   _currentAction = AC_STOP;
   _fixedAction = AC_STOP;
   _currentSpeed = DEFAULT_SPEED;
-  _turnOffset = 10;
+  _turnOffset = 20;
 
   _motorLeftOffset = 0;
   _motorRightOffset = 0;
@@ -40,16 +40,40 @@ void MdMotorWithController::init(){
   stop();
 }
 
-void MdMotorWithController::forward(){
+void MdMotorWithController::forward(bool smoothStart){
+  
+  if(smoothStart){
+    int startSpeed = 0;
+    int i = 0;
+    do {           
+      startSpeed += 5;
+      _serialWrite(MOTOR_TYPE_LEFT, MOTOR_STOP_VALUE + startSpeed);
+      _serialWrite(MOTOR_TYPE_RIGHT, MOTOR_STOP_VALUE + startSpeed);
+      delay(50);
+      i++; 
+    } while (startSpeed < _currentSpeed && i < 20);
+  }
   _currentAction = AC_FORWARD;  
   _fixedAction = AC_FORWARD;
-
   _serialWrite(MOTOR_TYPE_LEFT, MOTOR_STOP_VALUE + _currentSpeed);
   _serialWrite(MOTOR_TYPE_RIGHT, MOTOR_STOP_VALUE + _currentSpeed);
 
 }
 
-void MdMotorWithController::reverse(){
+void MdMotorWithController::reverse(bool smoothStart){
+
+  if(smoothStart){
+    int startSpeed = 0;
+    int i = 0;
+    do {           
+      startSpeed += 5;
+      _serialWrite(MOTOR_TYPE_LEFT, MOTOR_STOP_VALUE - startSpeed);
+      _serialWrite(MOTOR_TYPE_RIGHT, MOTOR_STOP_VALUE - startSpeed);
+      delay(50);
+      i++; 
+    } while (startSpeed < _currentSpeed && i < 20);
+  }
+  
   _currentAction = AC_REVERSE;
   _fixedAction = AC_REVERSE;
   
@@ -94,6 +118,30 @@ void MdMotorWithController::reverseRight(){
 }
 
 void MdMotorWithController::stop(){
+
+  // for smooth stop  
+  int i = 0;
+  int stopSpeed = _currentSpeed;
+  if(isForward()){
+    // Mean the robot is going forward
+    do {           
+      stopSpeed -= 10;
+      _serialWrite(MOTOR_TYPE_LEFT, MOTOR_STOP_VALUE + stopSpeed);
+      _serialWrite(MOTOR_TYPE_RIGHT, MOTOR_STOP_VALUE + stopSpeed);
+      delay(100);
+      i++; 
+    } while (stopSpeed > 0 && i < 10);
+  } else if(isReverse()) {
+     // Mean the robot is going reverse
+    do {
+      stopSpeed -= 10;
+      _serialWrite(MOTOR_TYPE_LEFT, MOTOR_STOP_VALUE - stopSpeed);
+      _serialWrite(MOTOR_TYPE_RIGHT, MOTOR_STOP_VALUE - stopSpeed);
+      delay(100);
+      i++;
+    } while (stopSpeed > 0 && i < 10);
+  }
+  
   _currentAction = AC_STOP;
   _fixedAction = AC_STOP;
   _serialWrite(MOTOR_TYPE_LEFT, MOTOR_STOP_VALUE);
@@ -136,10 +184,10 @@ bool MdMotorWithController::isReverse(){
 void MdMotorWithController::_refreshCurrentSpeed(){
   switch (_currentAction){
     case AC_FORWARD:
-      forward();
+      forward(false);
       break;
     case AC_REVERSE: 
-      reverse();
+      reverse(false);
       break;
   }
 }

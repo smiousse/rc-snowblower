@@ -50,7 +50,7 @@ void onConnect(){
 void notify(){
 
   if( Ps3.event.button_down.cross ){
-    snowblower.forward();
+    snowblower.forward(true);
     //Serial.println("Snowblower -> Forward");      
   } else if( Ps3.event.button_up.cross ){
     snowblower.stop();
@@ -58,7 +58,7 @@ void notify(){
   }
 
   if( Ps3.event.button_down.circle ){
-    snowblower.reverse();
+    snowblower.reverse(true);
     //Serial.println("Snowblower -> Reverse");
   } else if( Ps3.event.button_up.circle ){
     snowblower.stop();
@@ -78,10 +78,10 @@ void notify(){
     }
   } else if( Ps3.event.button_up.left ){        
     if(snowblower.isForward()){
-      snowblower.forward();
+      snowblower.forward(false);
       //Serial.println("Snowblower -> Forward");
     } else if(snowblower.isReverse()){
-      snowblower.reverse();
+      snowblower.reverse(false);
       //Serial.println("Snowblower -> Reverse");        
     } else {            
       snowblower.stop();
@@ -102,10 +102,10 @@ void notify(){
     }
   } else if( Ps3.event.button_up.right ){        
     if(snowblower.isForward()){
-      snowblower.forward();
+      snowblower.forward(false);
       //Serial.println("Snowblower -> Forward");
     } else if(snowblower.isReverse()){
-      snowblower.reverse();
+      snowblower.reverse(false);
       //Serial.println("Snowblower -> Reverse");        
     } else {            
       snowblower.stop();
@@ -130,7 +130,7 @@ void notify(){
   }  
 
 
-  if( Ps3.event.button_down.start || Ps3.event.button_down.l2 || Ps3.event.button_down.r2 ){
+  if( Ps3.event.button_down.start){
       snowblower.stop();
       //Serial.println("Snowblower -> STOP");
   }
@@ -152,12 +152,12 @@ void notify(){
       //Serial.println("Snowblower -> UpDown STOP");
   }
 
-  if( Ps3.event.button_down.square ){
+  if( Ps3.event.button_down.square || Ps3.event.button_down.l2){
       snowblower.increaseSpeed();
       //Serial.println("Snowblower -> Increase Speed");
   }
 
-  if( Ps3.event.button_down.triangle ){
+  if( Ps3.event.button_down.triangle  || Ps3.event.button_down.r2){
       snowblower.decreaseSpeed();
       //Serial.println("Snowblower -> Decrease Speed");
   } 

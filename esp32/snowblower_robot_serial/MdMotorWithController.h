@@ -9,8 +9,8 @@ class MdMotorWithController
   public:
     MdMotorWithController(String name);
 
-    void forward();
-    void reverse();
+    void forward(bool smoothStart);
+    void reverse(bool smoothStart);
     void fullLeft();
     void fullRight();
     void forwardLeft();
